@@ -22,6 +22,7 @@
             import * as THREE from '../build/three.module.js';
 
             import { OrbitControls } from './jsm/controls/OrbitControls.js';
+            import { GUI } from './jsm/libs/dat.gui.module.js';
 
             let camera, scene, renderer;
             let plane;
@@ -29,6 +30,9 @@
 
             let rollOverMesh, rollOverMaterial;
             let cubeGeo, cubeMaterial;
+
+            var aCube = {};
+            var selected;
 
             const objects = [];
 
@@ -55,6 +59,9 @@
 
                 cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
                 cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x0ae8f0, map: new THREE.TextureLoader().load( 'textures/square-outline-textured.png' ) } );
+
+                // make fake selected cube for gui
+                aCube.position = 0;
 
                 // grid
 
@@ -87,6 +94,16 @@
                 renderer.setPixelRatio( window.devicePixelRatio );
                 renderer.setSize( window.innerWidth, window.innerHeight );
                 document.body.appendChild( renderer.domElement );
+
+                // GUI
+
+                const gui = new GUI();
+                gui.add(aCube, 'position', 0, 100).onChange(function (e) {
+                    selected.position.y = e;
+                });
+                // gui.add( params, 'addPoint' );
+                // gui.add( params, 'removePoint' );
+                gui.open();
 
                  // Controls
                 const controls = new OrbitControls( camera, renderer.domElement );
@@ -162,6 +179,11 @@
 
                     } else {
 
+                        if ((intersect.object instanceof THREE.Mesh) && 
+                            (intersect.object !== plane)) {
+                            selected = intersect.object;
+                        }
+                        else {
                         const voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
                         voxel.position.copy( intersect.point ).add( intersect.face.normal );
                         voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
@@ -169,6 +191,7 @@
                         scene.add( voxel );
 
                         objects.push( voxel );
+                    }
 
                     }
 
