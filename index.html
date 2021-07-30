@@ -52,14 +52,14 @@
                 // roll-over helpers
 
                 const rollOverGeo = new THREE.BoxGeometry( 50, 50, 50 );
-                rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
+                rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0x949494, opacity: 0.5, transparent: true } );
                 rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
                 scene.add( rollOverMesh );
 
                 // cubes
 
                 cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
-                cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, map: new THREE.TextureLoader().load( 'textures/square-outline-textured.png' ) } );
+                cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x0ae8f0, map: new THREE.TextureLoader().load( 'textures/square-outline-textured.png' ) } );
 
                 // grid
 
@@ -103,7 +103,7 @@
                 document.addEventListener( 'keydown', onDocumentKeyDown );
                 document.addEventListener( 'keyup', onDocumentKeyUp );
 
-                //
+                
 
                 window.addEventListener( 'resize', onWindowResize );
 
@@ -170,6 +170,7 @@
                         const voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
                         voxel.position.copy( intersect.point ).add( intersect.face.normal );
                         voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
+                        // voxel.position.y = 75;
                         scene.add( voxel );
 
                         objects.push( voxel );
