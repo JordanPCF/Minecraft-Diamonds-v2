@@ -46,7 +46,8 @@
                 camera.lookAt( 0, 0, 0 );
 
                 scene = new THREE.Scene();
-                scene.background = new THREE.Color( 0xf0f0f0 );
+                // scene.background = new THREE.Color( 0xf0f0f0 );
+                scene.background = new THREE.Color( 0xff0000 )
 
                 // roll-over helpers
 
@@ -58,7 +59,7 @@
                 // cubes
 
                 cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
-                cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x0ae8f0, map: new THREE.TextureLoader().load( 'textures/square- outline-textured.png' ) } );
+                cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x0ae8f0, map: new THREE.TextureLoader().load( 'textures/square-outline-textured.png' ) } );
 
                 // make fake selected cube for gui
                 aCube.position = 0;
