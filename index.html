@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>three.js webgl - interactive - voxel painter</title>
+        <title>Diamond Dashboard</title>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <link type="text/css" rel="stylesheet" href="main.css">
-        <style>
-            body {
-                background-color: #f0f0f0;
-                color: #444;
-            }
-            a {
-                color: #08f;
-            }
-        </style>
+
+        <link type="text/css" rel="stylesheet" href="styles/main.css">
+
+        <script type="module" src="src/main.js"></script>
     </head>
-    <body style="overflow:hidden; margin:0">
+    <body>
+        <div id="scene-container">
+            
+        </div>
 
         <script type="module">
 
-            import * as THREE from '../build/three.module.js';
+            import * as THREE from './vendor/three/build/three.module.js';
 
-            import { OrbitControls } from './jsm/controls/OrbitControls.js';
-            import { GUI } from './jsm/libs/dat.gui.module.js';
+            import { OrbitControls } from './vendor/three/examples/jsm/controls/OrbitControls.js';
+            import { GUI } from './vendor/three/examples/jsm/libs/dat.gui.module.js';
 
             let camera, scene, renderer;
             let plane;
@@ -46,8 +44,7 @@
                 camera.lookAt( 0, 0, 0 );
 
                 scene = new THREE.Scene();
-                // scene.background = new THREE.Color( 0xf0f0f0 );
-                scene.background = new THREE.Color( 0xff0000 )
+                scene.background = new THREE.Color( 0xf0f0f0 );
 
                 // roll-over helpers
 
@@ -59,7 +56,7 @@
                 // cubes
 
                 cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
-                cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x0ae8f0, map: new THREE.TextureLoader().load( 'textures/square-outline-textured.png' ) } );
+                cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x0ae8f0, map: new THREE.TextureLoader().load( 'assets/textures/square-outline-textured.png' ) } );
 
                 // make fake selected cube for gui
                 aCube.position = 0;
