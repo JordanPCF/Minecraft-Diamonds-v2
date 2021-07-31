@@ -5,10 +5,6 @@ function createBlock(size) {
 
     return loadTexture()
            .then(function (result) {
-                // const material = new THREE.MeshLambertMaterial({
-                //     color: 0x0ae8f0,
-                //     map: result
-                // });
                 result.color.setHex(0x0ae8f0);
 
                 const block = new THREE.Mesh(geometry, result);
