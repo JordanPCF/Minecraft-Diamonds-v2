@@ -1,10 +1,9 @@
 import { createBlock } from './components/block.js';
 import { createCamera} from './components/camera.js';
-import { createOrbitControls } from './components/controls.js';
 import { createGhostBlock } from './components/ghostBlock.js';
 import { createGrid } from './components/grid.js';
 import { createGUI } from './components/gui.js';
-import { createAmbientLight createDirectionalLight } from './components/light.js';
+import { createAmbientLight, createDirectionalLight } from './components/light.js';
 import { createPlane } from './components/plane.js';
 import { createPointer } from './components/pointer.js';
 import { createRayCaster } from './components/rayCaster.js';
@@ -12,6 +11,7 @@ import { createScene } from './components/scene.js';
 
 import { createRenderer } from './systems/renderer.js';
 import { Resizer } from './systems/Resizer.js';
+import { createOrbitControls } from './systems/controls.js';
 
 // module-scoped variables
 let camera, scene, renderer;
@@ -39,11 +39,11 @@ class World {
         renderer = createRenderer();
         ambientLight = createAmbientLight();
         directionalLight = createDirectionalLight();
-        pointer = createPointer();
         rayCaster = createRayCaster();
         grid = createGrid(planeSize, gridDivision);
         plane = createPlane(planeSize);
         ghostBlock = createGhostBlock(blockSize);
+        pointer = createPointer(rayCaster, camera, objects, ghostBlock, this.render);
 
         objects.push(plane);
         
@@ -64,7 +64,7 @@ class World {
         const resizer = new Resizer(camera, renderer);
         resizer.onResize = function () {
             this.render();
-        }
+        }.bind(this);
     }
 
     render() {

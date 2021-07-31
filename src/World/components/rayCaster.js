@@ -6,4 +6,4 @@ function createRayCaster() {
     return rayCaster;
 }
 
-export { rayCaster };
+export { createRayCaster };

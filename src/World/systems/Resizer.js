@@ -16,11 +16,11 @@ class Resizer {
         window.addEventListener('resize', function () {
             setSize(camera, renderer);
             this.onResize(); // using hooks instead of World.render
-        });
+        }.bind(this));
 
     }
 
-    onResize() {} // empty method that can be customized from outside the Resizer class
+    onResize() {}; // empty method that can be customized from outside the Resizer class
 }
 
 export { Resizer };
