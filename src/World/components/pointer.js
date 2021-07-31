@@ -38,7 +38,7 @@ function listenForPointerDown (pointer, scene, rayCaster, camera, plane, objects
                 deleteBlock(scene, intersect, objects, plane);
             } else {
                 if (blockIsSelected(intersect, plane)) {
-                    selectedBlockHandler(selected);
+                    selectedBlockHandler(scene, selected[0]);
                 } else {
                     drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objects, fn);
                 }
@@ -80,14 +80,17 @@ function blockIsSelected(intersect, plane) {
             (intersect.object !== plane);
 }
 
-function selectedBlockHandler(selected) {
-    selected[0].material.color.setHex(0xffffff);
+function selectedBlockHandler(scene, selected) {
+    highlightBlock(selected);
+}
+
+function highlightBlock(selected) {
+    selected.material.opacity = 0.4;
 }
 
 function drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objects, fn) {
     createBlock(blockLength)
     .then(function (newBlock) {
-        console.log(newBlock.material.map);
         setBlockPosition(newBlock, blockLength, intersect);
         scene.add(newBlock);
         scene.remove(ghostBlock);

@@ -6,6 +6,8 @@ function createBlock(size) {
     return loadTexture()
            .then(function (result) {
                 result.color.setHex(0x0ae8f0);
+                result.opacity = 1;
+                result.transparent = true;
 
                 const block = new THREE.Mesh(geometry, result);
                 return promiseResolvedWith(block);
