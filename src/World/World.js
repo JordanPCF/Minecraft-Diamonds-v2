@@ -12,11 +12,12 @@ import { createScene } from './components/scene.js';
 import { createRenderer } from './systems/renderer.js';
 import { Resizer } from './systems/Resizer.js';
 import { createOrbitControls } from './systems/controls.js';
+import { listenForKeyPress } from './systems/keyPressEvents.js'
 
 // module-scoped variables
 let camera, scene, renderer;
 let ambientLight, directionalLight;
-let pointer, rayCaster, isShiftDown = false;
+let pointer, rayCaster;
 
 let grid, plane;
 let block, ghostBlock;
@@ -30,6 +31,7 @@ const gridDivision = 20;
 var aCube = {};
 var selected;
 var objects = [];
+const isKeyDown = {'shift': false};
 
 
 class World {
@@ -43,7 +45,9 @@ class World {
         grid = createGrid(planeSize, gridDivision);
         plane = createPlane(planeSize);
         ghostBlock = createGhostBlock(blockSize);
-        pointer = createPointer(rayCaster, camera, objects, ghostBlock, this.render);
+        listenForKeyPress(isKeyDown);
+        pointer = createPointer(scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, this.render);
+        
 
         objects.push(plane);
         
