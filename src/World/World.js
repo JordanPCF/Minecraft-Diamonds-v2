@@ -23,15 +23,48 @@ let block, ghostBlock;
 let orbitControls;
 let gui;
 
+const blockSize = 50;
+const planeSize = 1000;
+const gridDivision = 20;
+
+var aCube = {};
+var selected;
+var objects = [];
+
 
 class World {
     constructor(container) {
         camera = createCamera();
         scene = createScene();
         renderer = createRenderer();
+        ambientLight = createAmbientLight();
+        directionalLight = createDirectionalLight();
+        pointer = createPointer();
+        rayCaster = createRayCaster();
+        grid = createGrid(planeSize, gridDivision);
+        plane = createPlane(planeSize);
+        ghostBlock = createGhostBlock(blockSize);
+
+        objects.push(plane);
+        
+        scene.add(plane);
+        scene.add(grid);
+        scene.add(ghostBlock);
+        scene.add(ambientLight);
+        scene.add(directionalLight);
+
+        gui = createGUI();
+        gui.open();
+
+        orbitControls = createOrbitControls(camera, renderer.domElement);
+        orbitControls.addEventListener('change', this.render);
+        
+        container.append(renderer.domElement);
     }
 
-    render() {}
+    render() {
+        renderer.render(scene, camera);
+    }
 }
 
 export { World };
