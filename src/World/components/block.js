@@ -3,12 +3,38 @@ import * as THREE from '../../../vendor/three/build/three.module.js';
 function createBlock(size) {
     const geometry = new THREE.BoxGeometry(size, size, size);
 
-    const material = new THREE.MeshLambertMaterial( { color: 0x0ae8f0,
-                                                      map: new THREE.TextureLoader().load( '../../../assets/textures/square-outline-textured.png' ) } );
+    return loadTexture()
+           .then(function (result) {
+                // const material = new THREE.MeshLambertMaterial({
+                //     color: 0x0ae8f0,
+                //     map: result
+                // });
+                result.color.setHex(0x0ae8f0);
 
-    const block = new THREE.Mesh(geometry, material);
+                const block = new THREE.Mesh(geometry, result);
+                return promiseResolvedWith(block);
+            })
+}
 
-    return block;
+function loadTexture () {
+    return new Promise(function (resolve, reject) {
+        const loader = new THREE.TextureLoader();
+        loader.load('../../../assets/textures/square-outline-textured.png',
+                    function (texture) {
+                        const material = new THREE.MeshLambertMaterial({
+                            map: texture
+                            });
+
+                        resolve(material);
+                    })
+    });
+}
+
+function promiseResolvedWith(value) {
+    var promise = new Promise(function (resolve, reject) {
+        resolve(value);
+    });
+    return promise;
 }
 
 export { createBlock };

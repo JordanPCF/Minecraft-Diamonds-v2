@@ -1,28 +1,14 @@
 import * as THREE from '../../../vendor/three/build/three.module.js';
 
-function createPointer(scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, fn) {
+function createPointer(scene, rayCaster, camera, plane, objects, createBlock, selected, isKeyDown, fn) {
     const pointer = new THREE.Vector2();
-    var blockLength = ghostBlock.geometry.parameters.width;
+    var blockLength = 50;
 
-    listenForPointerMove(pointer, rayCaster, camera, objects, ghostBlock, blockLength, fn);
     listenForPointerDown(pointer, scene, rayCaster, camera, plane, objects, createBlock, selected, isKeyDown, blockLength, fn);
 
     return pointer;
 }
 
-function listenForPointerMove (pointer, rayCaster, camera, objects, ghostBlock, blockLength, fn) {
-    document.addEventListener('pointermove', function (event) {
-        setPointerPosition(pointer, event);
-        rayCaster.setFromCamera(pointer, camera);
-
-        var intersect = getIntersectingObject(rayCaster, objects);
-        if (intersect) {
-            setBlockPosition(ghostBlock, blockLength, intersect);
-        }
-
-        fn();
-    });
-}
 
 function listenForPointerDown (pointer, scene, rayCaster, camera, plane, objects, createBlock, selected, isKeyDown, blockLength, fn) {
     document.addEventListener('pointerdown', function (event) {
@@ -39,7 +25,7 @@ function listenForPointerDown (pointer, scene, rayCaster, camera, plane, objects
                 if (blockIsSelected(intersect, plane)) {
                     selectedBlockHandler(selected);
                 } else {
-                    drawBlock(scene, createBlock, blockLength, intersect, objects);
+                    drawBlock(scene, createBlock, blockLength, intersect, objects, fn);
                 }
             }
             fn();
@@ -80,15 +66,19 @@ function blockIsSelected(intersect, plane) {
 }
 
 function selectedBlockHandler(selected) {
-    selected[0].material.color.setHex(0x444444);
+    selected[0].material.color.setHex(0xffffff);
 }
 
-function drawBlock(scene, createBlock, blockLength, intersect, objects) {
-    const newBlock = createBlock(blockLength);
-    setBlockPosition(newBlock, blockLength, intersect);
+function drawBlock(scene, createBlock, blockLength, intersect, objects, fn) {
+    createBlock(blockLength)
+    .then(function (newBlock) {
+        console.log(newBlock.material.map);
+        setBlockPosition(newBlock, blockLength, intersect);
+        scene.add(newBlock);
+        objects.push(newBlock);
 
-    scene.add(newBlock);
-    objects.push(newBlock);
+        fn();
+    })
 }
 
 export { createPointer };

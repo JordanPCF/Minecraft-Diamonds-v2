@@ -47,6 +47,7 @@ class World {
         ghostBlock = createGhostBlock(blockSize);
         listenForKeyPress(isKeyDown);
         pointer = createPointer(scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, this.render);
+        pointer = createPointer(scene, rayCaster, camera, plane, objects, createBlock, selected, isKeyDown, this.render);
 
         aCube.xPosition = 0;
         
@@ -55,7 +56,7 @@ class World {
         
         scene.add(plane);
         scene.add(grid);
-        scene.add(ghostBlock);
+        // scene.add(ghostBlock);
         scene.add(ambientLight);
         scene.add(directionalLight);
 
