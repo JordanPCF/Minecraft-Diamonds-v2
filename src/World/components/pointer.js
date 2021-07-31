@@ -27,6 +27,7 @@ function createPointer(scene, rayCaster, camera, plane, objects, ghostBlock, cre
         const intersects = rayCaster.intersectObjects( objects );
             if ( intersects.length > 0 ) {
                  const intersect = intersects[ 0 ];
+                 selected[0] = intersect.object;
 
                 // delete block
                 if ( isKeyDown['shift'] ) {
@@ -39,7 +40,7 @@ function createPointer(scene, rayCaster, camera, plane, objects, ghostBlock, cre
                     // if selecting existing block
                     if ((intersect.object instanceof THREE.Mesh) && 
                         (intersect.object !== plane)) {
-                        selected = intersect.object;
+                        selected[0].material.color.setHex(0x444444);
                     }
                     else {
                     // creating block

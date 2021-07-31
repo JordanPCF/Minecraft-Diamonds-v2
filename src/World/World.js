@@ -29,7 +29,7 @@ const planeSize = 1000;
 const gridDivision = 20;
 
 var aCube = {};
-var selected;
+var selected = {};
 var objects = [];
 const isKeyDown = {'shift': false};
 
@@ -47,6 +47,8 @@ class World {
         ghostBlock = createGhostBlock(blockSize);
         listenForKeyPress(isKeyDown);
         pointer = createPointer(scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, this.render);
+
+        aCube.xPosition = 0;
         
 
         objects.push(plane);
@@ -57,7 +59,7 @@ class World {
         scene.add(ambientLight);
         scene.add(directionalLight);
 
-        gui = createGUI();
+        gui = createGUI(aCube, selected);
         gui.open();
 
         orbitControls = createOrbitControls(camera, renderer.domElement);
