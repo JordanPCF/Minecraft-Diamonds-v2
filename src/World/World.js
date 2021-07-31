@@ -60,6 +60,11 @@ class World {
         orbitControls.addEventListener('change', this.render);
         
         container.append(renderer.domElement);
+
+        const resizer = new Resizer(camera, renderer);
+        resizer.onResize = function () {
+            this.render();
+        }
     }
 
     render() {
