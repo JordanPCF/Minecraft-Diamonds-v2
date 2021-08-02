@@ -46,7 +46,7 @@ class World {
         plane = createPlane(planeSize);
         ghostBlock = createGhostBlock(blockSize);
         listenForKeyPress(isKeyDown);
-        pointer = createPointer(scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, this.render);
+        pointer = createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, this.render);
 
         aCube.xPosition = 0;
         

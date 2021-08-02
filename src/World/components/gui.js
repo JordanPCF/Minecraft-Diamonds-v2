@@ -6,6 +6,7 @@ function createGUI (aCube, selected) {
 
     gui.add(aCube, 'xPosition', 0, 100).onChange(function (e) {
         if (selected[0] instanceof THREE.Mesh) {
+            // selected[0].material.opacity = 0.4;
             selected[0].position.y = e;
         }
     });

@@ -5,11 +5,9 @@ function createBlock(size) {
 
     return loadTexture()
            .then(function (result) {
-                result.color.setHex(0x0ae8f0);
-                result.opacity = 1;
-                result.transparent = true;
-
+                result = setBlockProperties(result);
                 const block = new THREE.Mesh(geometry, result);
+                
                 return promiseResolvedWith(block);
             })
 }
@@ -26,6 +24,14 @@ function loadTexture () {
                         resolve(material);
                     })
     });
+}
+
+function setBlockProperties (material) {
+    material.color.setHex(0x0ae8f0);
+    material.opacity = 1;
+    material.transparent = true;
+
+    return material;
 }
 
 function promiseResolvedWith(value) {
