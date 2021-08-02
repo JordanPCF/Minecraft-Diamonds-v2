@@ -24,7 +24,7 @@ let block, ghostBlock;
 let orbitControls;
 let gui;
 
-const blockSize = 50;
+const blockLength = 50;
 const planeSize = 1000;
 const gridDivision = 20;
 
@@ -45,11 +45,16 @@ class World {
         rayCaster = createRayCaster();
         grid = createGrid(planeSize, gridDivision);
         plane = createPlane(planeSize);
-        ghostBlock = createGhostBlock(blockSize);
+        ghostBlock = createGhostBlock(blockLength);
         listenForKeyPress(isKeyDown);
-        pointer = createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, isBlockSelected, this.render);
 
-        aCube.xPosition = 0;
+        // needed for gui
+        aCube.x = 0;
+        aCube.y = 0;
+        aCube.z = 0;
+
+        gui = createGUI(aCube, selected, isBlockSelected, blockLength, gridDivision, this.render);
+        pointer = createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, blockLength, selected, isKeyDown, isBlockSelected, gui, this.render);
         
 
         objects.push(plane);
@@ -59,9 +64,6 @@ class World {
         scene.add(ghostBlock);
         scene.add(ambientLight);
         scene.add(directionalLight);
-
-        gui = createGUI(aCube, selected, isBlockSelected, this.render);
-        gui.open();
 
         orbitControls = createOrbitControls(camera, renderer.domElement);
         orbitControls.addEventListener('change', this.render);

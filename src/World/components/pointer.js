@@ -1,29 +1,27 @@
 import * as THREE from '../../../vendor/three/build/three.module.js';
 
-function createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, isBlockSelected, fn) {
+function createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, blockLength, selected, isKeyDown, isBlockSelected, gui, fn) {
     const pointer = new THREE.Vector2();
-    var blockLength = ghostBlock.geometry.parameters.width;
 
-    listenForPointerMove(pointer, scene, rayCaster, camera, objects, ghostBlock, blockLength, isBlockSelected, fn);
-    listenForPointerDown(renderer, pointer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, blockLength, isBlockSelected, fn);
+    listenForPointerMove(pointer, scene, rayCaster, camera, objects, ghostBlock, blockLength, isBlockSelected, gui, fn);
+    listenForPointerDown(renderer, pointer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, blockLength, isBlockSelected, gui, fn);
 
     return pointer;
 }
 
-function listenForPointerMove (pointer, scene, rayCaster, camera, objects, ghostBlock, blockLength, isBlockSelected, fn) {
+function listenForPointerMove (pointer, scene, rayCaster, camera, objects, ghostBlock, blockLength, isBlockSelected, gui, fn) {
     document.addEventListener('pointermove', function (event) {
         // only draw ghost block if another block is not selected
         if (!(isBlockSelected['block'])) {
             setPointerPosition(pointer, event);
             rayCaster.setFromCamera(pointer, camera);
+            gui.close()
 
             var intersect = getIntersectingObject(rayCaster, objects);
             if (intersect) {
                 setBlockPosition(ghostBlock, blockLength, intersect);
                 scene.add(ghostBlock);
-                document.getElementById('x').innerHTML = 'x: ' + ghostBlock.position.x;
-                document.getElementById('y').innerHTML = 'y: ' + ghostBlock.position.y;
-                document.getElementById('z').innerHTML = 'z: ' + ghostBlock.position.z;
+                updateCoordinates(ghostBlock, blockLength);
             } else {
                 scene.remove(ghostBlock);
             }
@@ -32,7 +30,7 @@ function listenForPointerMove (pointer, scene, rayCaster, camera, objects, ghost
     });
 }
 
-function listenForPointerDown (renderer, pointer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, blockLength, isBlockSelected, fn) {
+function listenForPointerDown (renderer, pointer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, blockLength, isBlockSelected, gui, fn) {
     renderer.domElement.addEventListener('pointerdown', function (event) {
         scene.remove(ghostBlock);
         setPointerPosition(pointer, event);
@@ -47,7 +45,7 @@ function listenForPointerDown (renderer, pointer, scene, rayCaster, camera, plan
                 deleteBlock(scene, intersect, objects, plane);
             } else {
                 if (checkBlockIsSelected(intersect.object, plane, isBlockSelected)) {
-                    selectedBlockHandler(scene, selected);
+                    selectedBlockHandler(scene, selected, gui, blockLength);
                 } else {
                     drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objects, isBlockSelected, fn);
                 }
@@ -55,6 +53,8 @@ function listenForPointerDown (renderer, pointer, scene, rayCaster, camera, plan
         }else {
             isBlockSelected['block'] = false;
         }
+
+        
         fn();
     });
 }
@@ -95,12 +95,28 @@ function checkBlockIsSelected(object, plane, isBlockSelected) {
     }
 }
 
-function selectedBlockHandler(scene, selected) {
-    highlightBlock(selected[0]);
+function selectedBlockHandler(scene, selected, gui, blockLength) {
+    highlightBlock(selected);
+    gui.matchPositionSelectedBlock(selected, blockLength);
+    gui.open();
+
+    showCoordinates(false);
+    
+}
+
+function showCoordinates(truth) {
+    var coordinatesDOM = document.getElementsByClassName("coordinates");
+    Array.prototype.forEach.call(coordinatesDOM, function (item) {
+        if (truth) {
+            item.style.visibility = "visible";
+        } else {
+            item.style.visibility = "hidden";
+        }
+    });
 }
 
 function highlightBlock(selected) {
-    selected.material.opacity = 0.4;
+    selected[0].material.opacity = 0.4;
 }
 
 function drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objects, isBlockSelected, fn) {
@@ -121,6 +137,18 @@ function setDefaultProperties(object, plane, isBlockSelected) {
     if (checkBlockIsSelected(object, plane, isBlockSelected)) {
         object.material.opacity = 1;
     }
+}
+
+function updateCoordinates(ghostBlock, blockLength) {
+    // shows the user the coordinates of the ghost block
+    var xpos = Math.floor(ghostBlock.position.x / blockLength);
+    var ypos = Math.floor(ghostBlock.position.y / blockLength);
+    var zpos = Math.floor(ghostBlock.position.z / blockLength);
+    document.getElementById('x').innerHTML = 'x: ' + xpos;
+    document.getElementById('y').innerHTML = 'y: ' + ypos;
+    document.getElementById('z').innerHTML = 'z: ' + zpos;
+
+    showCoordinates(true);
 }
 
 export { createPointer };
