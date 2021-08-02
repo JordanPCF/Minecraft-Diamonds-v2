@@ -1,35 +1,43 @@
 import * as THREE from '../../../vendor/three/build/three.module.js';
 
-function createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, fn) {
+function createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, isBlockSelected, fn) {
     const pointer = new THREE.Vector2();
     var blockLength = ghostBlock.geometry.parameters.width;
 
-    listenForPointerMove(pointer, scene, rayCaster, camera, objects, ghostBlock, blockLength, fn);
-    listenForPointerDown(renderer, pointer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, blockLength, fn);
+    listenForPointerMove(pointer, scene, rayCaster, camera, objects, ghostBlock, blockLength, isBlockSelected, fn);
+    listenForPointerDown(renderer, pointer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, blockLength, isBlockSelected, fn);
 
     return pointer;
 }
 
-function listenForPointerMove (pointer, scene, rayCaster, camera, objects, ghostBlock, blockLength, fn) {
+function listenForPointerMove (pointer, scene, rayCaster, camera, objects, ghostBlock, blockLength, isBlockSelected, fn) {
     document.addEventListener('pointermove', function (event) {
-        setPointerPosition(pointer, event);
-        rayCaster.setFromCamera(pointer, camera);
+        // only draw ghost block if another block is not selected
+        if (!(isBlockSelected['block'])) {
+            setPointerPosition(pointer, event);
+            rayCaster.setFromCamera(pointer, camera);
 
-        var intersect = getIntersectingObject(rayCaster, objects);
-        if (intersect) {
-            setBlockPosition(ghostBlock, blockLength, intersect);
-            scene.add(ghostBlock);
+            var intersect = getIntersectingObject(rayCaster, objects);
+            if (intersect) {
+                setBlockPosition(ghostBlock, blockLength, intersect);
+                scene.add(ghostBlock);
+                document.getElementById('x').innerHTML = 'x: ' + ghostBlock.position.x;
+                document.getElementById('y').innerHTML = 'y: ' + ghostBlock.position.y;
+                document.getElementById('z').innerHTML = 'z: ' + ghostBlock.position.z;
+            } else {
+                scene.remove(ghostBlock);
+            }
+            fn();
         }
-
-        fn();
     });
 }
 
-function listenForPointerDown (renderer, pointer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, blockLength, fn) {
+function listenForPointerDown (renderer, pointer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, blockLength, isBlockSelected, fn) {
     renderer.domElement.addEventListener('pointerdown', function (event) {
+        scene.remove(ghostBlock);
         setPointerPosition(pointer, event);
         rayCaster.setFromCamera( pointer, camera );
-        setDefaultProperties(selected[0], plane);
+        setDefaultProperties(selected[0], plane, isBlockSelected);
 
         var intersect = getIntersectingObject(rayCaster, objects);
         if (intersect) {
@@ -38,13 +46,14 @@ function listenForPointerDown (renderer, pointer, scene, rayCaster, camera, plan
             if (isKeyDown['shift']) {
                 deleteBlock(scene, intersect, objects, plane);
             } else {
-                if (blockIsSelected(intersect.object, plane)) {
+                if (checkBlockIsSelected(intersect.object, plane, isBlockSelected)) {
                     selectedBlockHandler(scene, selected);
                 } else {
-                    drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objects, fn);
-                    // setDefaultProperties(selected[0], plane);
+                    drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objects, isBlockSelected, fn);
                 }
             }
+        }else {
+            isBlockSelected['block'] = false;
         }
         fn();
     });
@@ -77,9 +86,13 @@ function deleteBlock(scene, intersect, objects, plane) {
     }
 }
 
-function blockIsSelected(object, plane) {
-    return (object instanceof THREE.Mesh) && 
-            (object !== plane);
+function checkBlockIsSelected(object, plane, isBlockSelected) {
+    if ((object instanceof THREE.Mesh) && (object !== plane)) {
+        isBlockSelected['block'] = true;
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function selectedBlockHandler(scene, selected) {
@@ -90,7 +103,8 @@ function highlightBlock(selected) {
     selected.material.opacity = 0.4;
 }
 
-function drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objects, fn) {
+function drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objects, isBlockSelected, fn) {
+    isBlockSelected['block'] = false;
     createBlock(blockLength)
     .then(function (newBlock) {
         setBlockPosition(newBlock, blockLength, intersect);
@@ -102,9 +116,9 @@ function drawBlock(scene, createBlock, ghostBlock, blockLength, intersect, objec
     })
 }
 
-function setDefaultProperties(object, plane) {
+function setDefaultProperties(object, plane, isBlockSelected) {
     // sets opacity of previousy selected block back to 1 to appear unselected
-    if (blockIsSelected(object, plane)) {
+    if (checkBlockIsSelected(object, plane, isBlockSelected)) {
         object.material.opacity = 1;
     }
 }

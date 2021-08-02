@@ -13,3 +13,14 @@ body {
 
     background-color: #f0f0f0;
 }
+
+#coordinate-label {
+    position: absolute;
+    top: 100px;
+    left: 75px;
+    z-index: 2;
+}
+
+p {
+    margin: 0;
+}

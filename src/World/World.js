@@ -32,6 +32,7 @@ var aCube = {};
 var selected = {};
 var objects = [];
 const isKeyDown = {'shift': false};
+const isBlockSelected = {'block': false};
 
 
 class World {
@@ -46,7 +47,7 @@ class World {
         plane = createPlane(planeSize);
         ghostBlock = createGhostBlock(blockSize);
         listenForKeyPress(isKeyDown);
-        pointer = createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, this.render);
+        pointer = createPointer(renderer, scene, rayCaster, camera, plane, objects, ghostBlock, createBlock, selected, isKeyDown, isBlockSelected, this.render);
 
         aCube.xPosition = 0;
         
@@ -59,7 +60,7 @@ class World {
         scene.add(ambientLight);
         scene.add(directionalLight);
 
-        gui = createGUI(aCube, selected);
+        gui = createGUI(aCube, selected, isBlockSelected, this.render);
         gui.open();
 
         orbitControls = createOrbitControls(camera, renderer.domElement);
