@@ -50,3 +50,42 @@ function createDiamondTable() {
         }
     });
 }
+
+function addGSI() {
+    var params = {
+        TableName : "DiamondLocations",
+        AttributeDefinitions: [       
+            { AttributeName: "GSI1PK", AttributeType: "S" },
+            { AttributeName: "GSI1SK", AttributeType: "S" }
+        ],
+        GlobalSecondaryIndexUpdates: [
+            {
+                Create: {
+                    IndexName: "GSI1Index",
+                    KeySchema: [
+                        { AttributeName: "GSI1PK", KeyType: "HASH"},
+                        { AttributeName: "GSI1SK", KeyType: "RANGE"}
+                    ],
+                    Projection: {
+                        ProjectionType: "ALL"
+                    },
+                    ProvisionedThroughput: {       
+                        ReadCapacityUnits: 5,
+                        WriteCapacityUnits: 5
+                    }
+                }
+            }
+        ]
+    };
+
+    dynamodb.updateTable(params, function(err, data) {
+        if (err) {
+            document.getElementById('textarea').innerHTML = "Unable to update table: " + "\n" + JSON.stringify(err, undefined, 2);
+        } else {
+            document.getElementById('textarea').innerHTML = "Updated table: " + "\n" + JSON.stringify(data, undefined, 2);
+        }
+    });
+}
+
+window.createDiamondTable = createDiamondTable
+window.addGSI = addGSI
