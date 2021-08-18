@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Diamond Database</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+        <link type="text/css" rel="stylesheet" href="styles/main.css">
+        
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+        <script type="module" src="src/World/systems/database.js"></script>
+    </head>
+    <body>
+        <input id="createTableButton" type="button" value="Create Table" onclick="createDiamondTable();" />
+        <br><br>
+        <textarea readonly id= "textarea" style="width:400px; height:800px"></textarea>
+
+    </body>
+</html>
