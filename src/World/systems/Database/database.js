@@ -1,3 +1,5 @@
+import { cantor_pairing, inverse_cantor } from './cantor_hash.js';
+
 AWS.config.update({
   region: "us-west-2",
   // The endpoint should point to the local or remote computer where DynamoDB (downloadable) is running.
@@ -51,6 +53,20 @@ function createDiamondTable() {
     });
 }
 
+function deleteDiamondTable() {
+    var params = {
+        TableName : "DiamondLocations"
+    };
+
+    dynamodb.deleteTable(params, function(err, data) {
+        if (err) {
+            document.getElementById('textarea').innerHTML = "Unable to delete table: " + "\n" + JSON.stringify(err, undefined, 2);
+        } else {
+            document.getElementById('textarea').innerHTML = "Table deleted.";
+        }
+    });
+}
+
 function addGSI() {
     var params = {
         TableName : "DiamondLocations",
@@ -89,3 +105,4 @@ function addGSI() {
 
 window.createDiamondTable = createDiamondTable
 window.addGSI = addGSI
+window.deleteDiamondTable = deleteDiamondTable
