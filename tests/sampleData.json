@@ -1,12 +1,19 @@
 [
     {
-        "x": 20,
-        "y": 13,
-        "z": 34
-    },
-    {
-        "x": 25,
-        "y": 11,
-        "z": 10
+        "PK": "PATCH#GRAVEL",
+        "SK": "SWAMP#0413#1",
+        "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY": "SWAMP#GRAVEL#YES#YES",
+        "CHUNK#PATCH": "0413#1",
+        "CHUNK_ID": 413,
+        "NUM_DIAMONDS": 4,
+        "PATCH_AREA": 8,
+        "DIAMOND_LOCATIONS": {"X": [3122, 3122, 3123, 3123],
+                              "Y": [12, 12, 12, 12],
+                              "Z": [234, 235, 234, 235]
+                          },
+        "X_OFFSET": [3, 4],
+        "Z_OFFSET": [6, 7],
+        "Y_RANGE": [12, 12]      
     }
+
 ]
