@@ -156,7 +156,7 @@ function readItem() {
 }
 
 function pkQuery(patch_type) {
-    document.getElementById('textarea').innerHTML += "Querying for gravel" + "\n";
+    document.getElementById('textarea').innerHTML += "Querying for " + patch_type + "\n";
 
     var params = {
         TableName : "DiamondLocations",
@@ -173,7 +173,7 @@ function pkQuery(patch_type) {
         if (err) {
             document.getElementById('textarea').innerHTML += "Unable to query. Error: " + "\n" + JSON.stringify(err, undefined, 2);
         } else {
-            document.getElementById('textarea').innerHTML += "Query results for gravel: " + "\n" + JSON.stringify(data, undefined, 2);
+            document.getElementById('textarea').innerHTML += "Query results for " + patch_type + ": " + "\n" + JSON.stringify(data, undefined, 2);
         }
     });
 }
