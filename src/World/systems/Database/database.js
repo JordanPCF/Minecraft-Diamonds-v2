@@ -134,7 +134,29 @@ function addItem() {
     });
 }
 
+function readItem() {
+    var table = "DiamondLocations";
+    var pk = "PATCH#GRAVEL";
+    var sk = "SWAMP#0413#1";
+
+    var params = {
+        TableName: table,
+        Key:{
+            "PK": pk,
+            "SK": sk
+        }
+    };
+    docClient.get(params, function(err, data) {
+        if (err) {
+            document.getElementById('textarea').innerHTML = "Unable to read item: " + "\n" + JSON.stringify(err, undefined, 2);
+        } else {
+            document.getElementById('textarea').innerHTML = "GetItem succeeded: " + "\n" + JSON.stringify(data, undefined, 2);
+        }
+    });
+}
+
 window.createDiamondTable = createDiamondTable
 window.addGSI = addGSI
 window.deleteDiamondTable = deleteDiamondTable
 window.addItem = addItem
+window.readItem = readItem
