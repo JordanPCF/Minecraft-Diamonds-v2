@@ -1,15 +1,15 @@
 // import { cantor_pairing, inverse_cantor } from './cantor_hash.js';
 
 AWS.config.update({
-  region: "us-west-2",
+  region: "us-west-2"
   // The endpoint should point to the local or remote computer where DynamoDB (downloadable) is running.
-  endpoint: 'http://localhost:8000',
+  // endpoint: 'http://localhost:8000',
   /*
     accessKeyId and secretAccessKey defaults can be used while using the downloadable version of DynamoDB. 
     For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
   */
-  accessKeyId: "fakeMyKeyId",
-  secretAccessKey: "fakeSecretAccessKey"
+  // accessKeyId: "fakeMyKeyId",
+  // secretAccessKey: "fakeSecretAccessKey"
 });
 
   /* 
@@ -18,12 +18,12 @@ AWS.config.update({
      Make sure Cognito is available in the DynamoDB web service region (specified above).
      Finally, modify the IdentityPoolId and the RoleArn with your own.
   */
-/*
+
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-IdentityPoolId: "us-west-2:12345678-1ab2-123a-1234-a12345ab12",
-RoleArn: "arn:aws:iam::123456789012:role/dynamocognito"
+IdentityPoolId: "us-west-2:bf70fc7a-264d-4bea-b2e5-7470e04381d9"
+// RoleArn: "arn:aws:iam::871954724261:role/Cognito_minecraftdiamondsAuth_Role"
 });
-*/
+
 
 var dynamodb = new AWS.DynamoDB();
 var docClient = new AWS.DynamoDB.DocumentClient();
