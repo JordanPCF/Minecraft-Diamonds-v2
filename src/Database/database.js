@@ -29,6 +29,7 @@ var dynamodb = new AWS.DynamoDB();
 var docClient = new AWS.DynamoDB.DocumentClient();
 
 function createDiamondTable() {
+    document.getElementById('fileinput').addEventListener('change', loadData, false)
     var params = {
         TableName : "DiamondLocations",
         KeySchema: [
@@ -134,6 +135,44 @@ function addItem() {
     });
 }
 
+function loadData(evt) {
+    var file = evt.target.files[0];
+
+    if (file) {
+        var r = new FileReader();
+
+        r.onload = function(e) {
+            var contents = e.target.result;
+            var allDiamonds = JSON.parse(contents);
+
+            allDiamonds.forEach(function (cluster) {
+                var params = {
+                    TableName: "DiamondLocations",
+                    Item: {
+                        "PK": cluster.PK,
+                        "SK": cluster.SK,
+                        "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY": cluster['BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY'],
+                        "CHUNK#PATCH": cluster['CHUNK#PATCH'],
+                        "INFO": cluster.INFO
+                    }
+                };
+                docClient.put(params, function (err, data) {
+                    if (err) {
+                        document.getElementById('textarea').innerHTML += "Unable to add cluster: " + count + cluster.SK + "\n";
+                        document.getElementById('textarea').innerHTML += "Error JSON: " + JSON.stringify(err) + "\n";
+                    } else {
+                        document.getElementById('textarea').innerHTML += "PutItem succeeded: " + cluster.SK + "\n";
+                        textarea.scrollTop = textarea.scrollHeight;
+                    }
+                });
+            });
+        };
+        r.readAsText(file);
+    } else {
+        alert("Could not read file");
+    }  
+}
+
 function readItem() {
     var table = "DiamondLocations";
     var pk = "PATCH#GRAVEL";
@@ -184,3 +223,4 @@ window.deleteDiamondTable = deleteDiamondTable
 window.addItem = addItem
 window.readItem = readItem
 window.pkQuery = pkQuery
+window.loadData = loadData

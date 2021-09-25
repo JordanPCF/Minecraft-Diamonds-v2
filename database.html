@@ -18,8 +18,12 @@
          <input id="addItemButton" type="button" value="Add Item" onclick="addItem();" />
         <input id="readItemButton" type="button" value="Read Item" onclick="readItem();" />
         <input id="pkQueryButton" type="button" value="pkQuery" onclick="pkQuery('PATCH#GRAVEL');" />
+        <input type="file" id="fileinput" accept='application/json'/>
         <br><br>
         <textarea readonly id= "textarea" style="width:400px; height:800px"></textarea>
 
+        <script>
+            // document.getElementById('fileinput').addEventListener('change', loadData, false);
+        </script>
     </body>
 </html>
