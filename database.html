@@ -9,7 +9,7 @@
         <link type="text/css" rel="stylesheet" href="styles/main.css">
         
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
-        <script type="module" src="src/World/systems/Database/database.js"></script>
+        <script type="module" src="src/Database/database.js"></script>
     </head>
     <body>
         <input id="createTableButton" type="button" value="Create Table" onclick="createDiamondTable();" />
@@ -17,6 +17,7 @@
         <input id="updateTableButton" type="button" value="Add GSI" onclick="addGSI();" />
          <input id="addItemButton" type="button" value="Add Item" onclick="addItem();" />
         <input id="readItemButton" type="button" value="Read Item" onclick="readItem();" />
+        <input id="pkQueryButton" type="button" value="pkQuery" onclick="pkQuery('PATCH#GRAVEL');" />
         <br><br>
         <textarea readonly id= "textarea" style="width:400px; height:800px"></textarea>
 

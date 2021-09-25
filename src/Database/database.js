@@ -119,9 +119,9 @@ function addItem() {
                                   "Y": [12, 12, 12, 12],
                                   "Z": [234, 235, 234, 235]
                               },
-            "X_OFFSET": [3, 4],
-            "Z_OFFSET": [6, 7],
-            "Y_RANGE": [12, 12]      
+            "PATCH_CENTER_X": 3125,
+            "PATCH_CENTER_Z": 240,
+            "DIAMOND_Y_RANGE": [12, 12]      
         },
         TableName: "DiamondLocations"
     };
@@ -155,8 +155,32 @@ function readItem() {
     });
 }
 
+function pkQuery(patch_type) {
+    document.getElementById('textarea').innerHTML += "Querying for gravel" + "\n";
+
+    var params = {
+        TableName : "DiamondLocations",
+        KeyConditionExpression: "#pk = :patch_type",
+        ExpressionAttributeNames:{
+            "#pk": "PK"
+        },
+        ExpressionAttributeValues: {
+            ":patch_type": patch_type
+        }
+    };
+
+    docClient.query(params, function(err, data) {
+        if (err) {
+            document.getElementById('textarea').innerHTML += "Unable to query. Error: " + "\n" + JSON.stringify(err, undefined, 2);
+        } else {
+            document.getElementById('textarea').innerHTML += "Query results for gravel: " + "\n" + JSON.stringify(data, undefined, 2);
+        }
+    });
+}
+
 window.createDiamondTable = createDiamondTable
 window.addGSI = addGSI
 window.deleteDiamondTable = deleteDiamondTable
 window.addItem = addItem
 window.readItem = readItem
+window.pkQuery = pkQuery

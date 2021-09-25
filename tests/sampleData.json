@@ -11,9 +11,9 @@
                               "Y": [12, 12, 12, 12],
                               "Z": [234, 235, 234, 235]
                           },
-        "X_OFFSET": [3, 4],
-        "Z_OFFSET": [6, 7],
-        "Y_RANGE": [12, 12]      
+        "PATCH_CENTER_X": 3125,
+        "PATCH_CENTER_Z": 240,
+        "DIAMOND_Y_RANGE": [12, 12]       
     }
 
 ]
