@@ -16,9 +16,17 @@ body {
 
 #coordinate-label {
     position: absolute;
-    top: 100px;
+    bottom: 40px;
+    right: 75px;
+    z-index: 2;
+}
+
+.button {
+    position: absolute;
+    bottom: 30px;
     left: 75px;
     z-index: 2;
+    background-color: #343f59;
 }
 
 p {
