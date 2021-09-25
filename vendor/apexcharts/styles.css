@@ -1,7 +1,7 @@
 
 body {
   background: #343E59;
-  color: #777;
+  color: #fff;
   font-family: Montserrat, Arial, sans-serif;
 }
 
@@ -28,6 +28,10 @@ body {
   padding: 25px 20px;
 }
 
+.row {
+  flex-wrap: nowrap;
+}
+
 .shadow {
   box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
 }
@@ -52,5 +56,12 @@ body {
   color: #fff;
 }
 
-
-zs
+/*https://mdbootstrap.com/docs/b4/jquery/tables/scroll/*/
+.my-custom-scrollbar {
+position: relative;
+height: 280px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
