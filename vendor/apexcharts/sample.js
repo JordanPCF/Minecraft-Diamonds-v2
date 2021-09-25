@@ -73,6 +73,11 @@ var options_swamp = {
           text: 'Diamond Z-axis Offsets in Swamps',
           align: 'center'
         },
+        xaxis: {
+          title: {
+            text: 'Case #'
+          }
+        },
         plotOptions: {
           boxPlot: {
             colors: {
@@ -134,6 +139,11 @@ var options_river = {
         title: {
           text: 'Diamond Z-axis Offsets in Riverbeds',
           align: 'center'
+        },
+        xaxis: {
+          title: {
+            text: 'Case #'
+          }
         },
         plotOptions: {
           boxPlot: {
