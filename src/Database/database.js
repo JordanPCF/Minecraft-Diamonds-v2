@@ -20,17 +20,18 @@ class Database {
 
     setUpDB() {
         // TODO: don't attempt other functions if table exists
-        // return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
+            try {
+                this.createTable();
+                this.addGSI();
+                this.loadData();
+            } catch {
+                console.log('Table exists');
+            }
+            resolve("")
+        });
 
-        // })
         
-        try {
-            this.createTable();
-            this.addGSI();
-            this.loadData();
-        } catch {
-            console.log('Table exists');
-        }
 
     }
 
@@ -112,27 +113,32 @@ class Database {
     }
 
     pkQuery(patch_type) {
+        var t_name = this.table_name;
 
-        var params = {
-            TableName : this.table_name,
-            KeyConditionExpression: "#pk = :patch_type",
-            ExpressionAttributeNames:{
-                "#pk": "PK"
-            },
-            ExpressionAttributeValues: {
-                ":patch_type": patch_type
-            }
-        };
+        return new Promise(function (resolve, reject) {
 
-        docClient.query(params, function(err, data) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(data);
-                return data
-            }
+            var params = {
+                TableName : t_name,
+                KeyConditionExpression: "#pk = :patch_type",
+                ExpressionAttributeNames:{
+                    "#pk": "PK"
+                },
+                ExpressionAttributeValues: {
+                    ":patch_type": patch_type
+                }
+            };
+
+            docClient.query(params, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    resolve(0);
+                } else {
+                    // console.log(data);
+                    resolve(data);
+                }
+            });
         });
-    return 0
+    
     }
 
 }

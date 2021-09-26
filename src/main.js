@@ -7,12 +7,21 @@ function main() {
 
     const world = new World(container);
     const db = new Database('DiamondLocations')
-    db.setUpDB.bind(db)();
 
-    const dash = new Dashboard(db)
-    console.log(dash.get_query_results());
-
+    promise_chain(db);    
     world.render();
+}
+
+function promise_chain(db) {
+    var promise = db.setUpDB.bind(db)();
+
+    promise.then(result => {
+                    return new Dashboard(db)})
+           .then(result => {
+                    return result.get_query_results.bind(result)()})
+           .then(result => {
+                    console.log(result)})
+
 }
 
 main();

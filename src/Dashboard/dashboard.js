@@ -7,6 +7,8 @@ class Dashboard {
     get_query_results() {
         return this.db.pkQuery('PATCH#GRAVEL');
     }
+
 }
+
 
 export { Dashboard }
