@@ -15,7 +15,17 @@ var docClient = new AWS.DynamoDB.DocumentClient();
 
 class Database {
     constructor(table_name) {
-        this.table_name = table_name
+        this.table_name = table_name;
+        this.GSI_key = {
+            '1': '#GRAVEL#NO#NO',
+            '2': '#GRAVEL#YES#NO',
+            '3': '#GRAVEL#NO#YES',
+            '4': '#GRAVEL#YES#YES',
+            '5': '#CLAY#NO#NO',
+            '6': '#CLAY#YES#NO',
+            '7': '#CLAY#NO#YES',
+            '8': '#CLAY#YES#YES'
+        };
     }
 
     setUpDB() {
