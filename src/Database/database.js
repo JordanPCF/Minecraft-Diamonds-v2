@@ -22,9 +22,9 @@ class Database {
         // TODO: don't attempt other functions if table exists
         return new Promise(function (resolve, reject) {
             try {
-                this.createTable();
-                this.addGSI();
-                this.loadData();
+                this._createTable();
+                this._addGSI();
+                this._loadData();
             } catch {
                 console.log('Table exists');
             }
@@ -33,83 +33,6 @@ class Database {
 
         
 
-    }
-
-    createTable () {
-        var params = {
-            TableName : this.table_name,
-            KeySchema: [
-                { AttributeName: "PK", KeyType: "HASH"},
-                { AttributeName: "SK", KeyType: "RANGE" }
-            ],
-            AttributeDefinitions: [       
-                { AttributeName: "PK", AttributeType: "S" },
-                { AttributeName: "SK", AttributeType: "S" }
-            ],
-            ProvisionedThroughput: {       
-                ReadCapacityUnits: 5,
-                WriteCapacityUnits: 5
-            }
-        };
-
-        dynamodb.createTable(params, function (err) {
-            if (err) {
-                console.log('Table already exists');
-            }
-        });
-    }
-
-    addGSI() {
-        var params = {
-            TableName : this.table_name,
-            AttributeDefinitions: [       
-                { AttributeName: "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY",
-                  AttributeType: "S" },
-                { AttributeName: "CHUNK#PATCH", AttributeType: "S" }
-            ],
-            GlobalSecondaryIndexUpdates: [
-                {
-                    Create: {
-                        IndexName: "GSI1Index",
-                        KeySchema: [
-                            { AttributeName: "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY", KeyType: "HASH"},
-                            { AttributeName: "CHUNK#PATCH", KeyType: "RANGE"}
-                        ],
-                        Projection: {
-                            ProjectionType: "ALL"
-                        },
-                        ProvisionedThroughput: {       
-                            ReadCapacityUnits: 5,
-                            WriteCapacityUnits: 5
-                        }
-                    }
-                }
-            ]
-        };
-
-        dynamodb.updateTable(params);
-    }
-
-    loadData () {
-        var t_name = this.table_name // had issue binding 'this'
-
-        data.forEach(function (cluster) {
-            var params = {
-                    TableName: t_name,
-                    Item: {
-                        "PK": cluster['PK'],
-                        "SK": cluster['SK'],
-                        "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY": cluster['BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY'],
-                        "CHUNK#PATCH": cluster['CHUNK#PATCH'],
-                        "INFO": cluster['INFO']
-                    }
-            };
-            docClient.put(params, function (err, data) {
-                if (err) {
-                    console.log(err)
-                }
-            })
-        });
     }
 
     pkQuery(patch_type) {
@@ -140,6 +63,85 @@ class Database {
         });
     
     }
+
+    _createTable () {
+        var params = {
+            TableName : this.table_name,
+            KeySchema: [
+                { AttributeName: "PK", KeyType: "HASH"},
+                { AttributeName: "SK", KeyType: "RANGE" }
+            ],
+            AttributeDefinitions: [       
+                { AttributeName: "PK", AttributeType: "S" },
+                { AttributeName: "SK", AttributeType: "S" }
+            ],
+            ProvisionedThroughput: {       
+                ReadCapacityUnits: 5,
+                WriteCapacityUnits: 5
+            }
+        };
+
+        dynamodb.createTable(params, function (err) {
+            if (err) {
+                console.log('Table already exists');
+            }
+        });
+    }
+
+    _addGSI() {
+        var params = {
+            TableName : this.table_name,
+            AttributeDefinitions: [       
+                { AttributeName: "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY",
+                  AttributeType: "S" },
+                { AttributeName: "CHUNK#PATCH", AttributeType: "S" }
+            ],
+            GlobalSecondaryIndexUpdates: [
+                {
+                    Create: {
+                        IndexName: "GSI1Index",
+                        KeySchema: [
+                            { AttributeName: "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY", KeyType: "HASH"},
+                            { AttributeName: "CHUNK#PATCH", KeyType: "RANGE"}
+                        ],
+                        Projection: {
+                            ProjectionType: "ALL"
+                        },
+                        ProvisionedThroughput: {       
+                            ReadCapacityUnits: 5,
+                            WriteCapacityUnits: 5
+                        }
+                    }
+                }
+            ]
+        };
+
+        dynamodb.updateTable(params);
+    }
+
+    _loadData () {
+        var t_name = this.table_name // had issue binding 'this'
+
+        data.forEach(function (cluster) {
+            var params = {
+                    TableName: t_name,
+                    Item: {
+                        "PK": cluster['PK'],
+                        "SK": cluster['SK'],
+                        "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY": cluster['BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY'],
+                        "CHUNK#PATCH": cluster['CHUNK#PATCH'],
+                        "INFO": cluster['INFO']
+                    }
+            };
+            docClient.put(params, function (err, data) {
+                if (err) {
+                    console.log(err)
+                }
+            })
+        });
+    }
+
+    
 
 }
 

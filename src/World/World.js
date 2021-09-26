@@ -25,8 +25,9 @@ let orbitControls;
 let gui;
 
 const blockLength = 50;
-const planeSize = 1000;
-const gridDivision = 20;
+var chunkViewFactor = 2;
+const gridDivision = 16 * chunkViewFactor;
+var planeSize = gridDivision * blockLength;
 
 var aCube = {};
 var selected = {};
@@ -37,7 +38,7 @@ const isBlockSelected = {'block': false};
 
 class World {
     constructor(container) {
-        camera = createCamera();
+        camera = createCamera(planeSize);
         scene = createScene();
         renderer = createRenderer();
         ambientLight = createAmbientLight();
