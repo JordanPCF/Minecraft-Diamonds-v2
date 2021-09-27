@@ -1,12 +1,12 @@
-// create box and whisker plots
+
 class Dashboard {
     constructor(db) {
         this.db = db;
 
-        this._assemble_dashboard();
+        // this._assemble_dashboard();
     }
 
-    _assemble_dashboard() {
+    assemble_dashboard() {
         this._make_biome_plot("SWAMP");
         // this._make_biome_plot("RIVER");
         // this._make_depth_plot();
@@ -30,7 +30,7 @@ class Dashboard {
         results.then(data => {
                     return this._get_quartile_stats(data)})
                 .then(data => {
-                    this._make_box_and_whisker_plot(data)
+                    this._make_box_and_whisker_plot(data, biome)
                 }); 
 
     }
@@ -39,8 +39,45 @@ class Dashboard {
         return this.db.gsiQuery;
     }
 
-    _make_box_and_whisker_plot(data) {
-        console.log(data);
+    _make_box_and_whisker_plot(data_, biome) {
+        var color_choices = {"SWAMP": {upper: '#046242',
+                                      lower: '#00e395'},
+                             "RIVER": {upper: '#27d5f1d1',
+                                      lower: '#73423d40'}};
+
+        var options = {
+            series: [
+                {
+                    type: 'boxPlot',
+                    data: data_
+                }
+            ],
+            chart: {
+              type: 'boxPlot',
+              height: 300
+            },
+            title: {
+              text: 'Diamond Z-axis Offsets in '
+                    + biome.charAt(0).toUpperCase() 
+                    + biome.slice(1).toLowerCase(),
+              align: 'center'
+            },
+            xaxis: {
+              title: {
+                text: 'Case #'
+              }
+            },
+            plotOptions: {
+              boxPlot: {
+                colors: color_choices[biome]
+              }
+            }
+        };
+
+        var id_selector = '#' + biome.toLowerCase();
+        var chart = new ApexCharts(document.querySelector(id_selector), options);
+        chart.render();
+
         
     }
 
