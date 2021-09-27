@@ -69,7 +69,8 @@ class Database {
                     resolve(0);
                 } else {
                     // console.log(data);
-                    resolve(data);
+                    // to match what apexcharts wants
+                    resolve({x: case_, y: data});
                 }
             });
         })

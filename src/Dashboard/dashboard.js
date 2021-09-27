@@ -8,7 +8,7 @@ class Dashboard {
 
     _assemble_dashboard() {
         this._make_biome_plot("SWAMP");
-        this._make_biome_plot("RIVER");
+        // this._make_biome_plot("RIVER");
         // this._make_depth_plot();
 
     }
@@ -28,11 +28,10 @@ class Dashboard {
         var results = Promise.all(case_queries_promises);
 
         results.then(data => {
-            console.log(data)}); 
-
-        // this._query().then(result => {
-        //     this._make_box_and_whisker_plot(result);
-        // })
+                    return this._get_quartile_stats(data)})
+                .then(data => {
+                    this._make_box_and_whisker_plot(data)
+                }); 
 
     }
 
@@ -41,13 +40,41 @@ class Dashboard {
     }
 
     _make_box_and_whisker_plot(data) {
-
-        var cleaned_data = this._clean_data(data);
-        console.log(cleaned_data);
+        console.log(data);
+        
     }
 
-    _clean_data(data) {
-        return data;
+    _get_quartile_stats(data) {
+        return new Promise(function (resolve, reject) {
+            data.forEach(case_ => {
+            
+                var z_offset_vals = [];
+
+                var diamond_clusters = Array.from(case_.y.Items);
+                diamond_clusters.forEach(cluster => {
+                    var z_data = cluster.INFO.DIAMOND_LOCATIONS.Z;
+                    var patch_center_z = cluster.INFO.PATCH_CENTER_Z;
+
+                    z_data.forEach(zpoint => {
+                        z_offset_vals.push(patch_center_z - zpoint);
+                    })
+
+                })
+
+                var quartiles = [
+                    d3.quantile(z_offset_vals, 0),
+                    d3.quantile(z_offset_vals, 0.25),
+                    d3.quantile(z_offset_vals, 0.5),
+                    d3.quantile(z_offset_vals, 0.75),
+                    d3.quantile(z_offset_vals, 1)
+                ];
+
+                case_.y = quartiles;
+            });
+
+            resolve(data);
+        });
+        
     }
 
 
