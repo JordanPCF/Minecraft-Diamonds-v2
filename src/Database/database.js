@@ -45,6 +45,37 @@ class Database {
 
     }
 
+    gsiQuery(specifications) {
+        var t_name = this.table_name;
+        var case_ = Object.keys(specifications)[0];
+        var index = specifications[case_] + this.GSI_key[case_];
+
+        return new Promise(function (resolve, reject) {
+            var params = {
+                TableName : t_name,
+                IndexName: "GSI1Index",
+                KeyConditionExpression: "#gsi1 = :case",
+                ExpressionAttributeNames:{
+                    "#gsi1": "BIOME#PATCH_TYPE#IS_CUT_OFF#IS_AT_BOUNDARY"
+                },
+                ExpressionAttributeValues: {
+                    ":case": index
+                }
+            };
+
+            docClient.query(params, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    resolve(0);
+                } else {
+                    // console.log(data);
+                    resolve(data);
+                }
+            });
+        })
+
+    }
+
     pkQuery(patch_type) {
         var t_name = this.table_name;
 

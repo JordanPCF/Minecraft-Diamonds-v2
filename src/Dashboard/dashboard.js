@@ -24,7 +24,7 @@ class Dashboard {
                      {'7': biome},
                      {'8': biome}];
 
-        var case_queries_promises = cases.map(this._query.bind(this));
+        var case_queries_promises = cases.map(this.db.gsiQuery.bind(this.db));
         var results = Promise.all(case_queries_promises);
 
         results.then(data => {
@@ -37,7 +37,7 @@ class Dashboard {
     }
 
     _query() {
-        return this.db.pkQuery('PATCH#GRAVEL');
+        return this.db.gsiQuery;
     }
 
     _make_box_and_whisker_plot(data) {
