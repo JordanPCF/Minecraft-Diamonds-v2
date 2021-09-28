@@ -51,9 +51,13 @@ p {
     position: absolute;
     bottom: 0px;
     left: 365px;
-    opacity: 0.1;
+    /*opacity: 0.1;*/
 }
 
 body.map {
     background-color: #1e3060;
+}
+
+.grid_coordinates {
+    color: #f8f9fa;
 }

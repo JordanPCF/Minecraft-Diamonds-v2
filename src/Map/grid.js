@@ -1,20 +1,27 @@
 // grid code from https://bl.ocks.org/cagrimmett/07f8c8daea00946b9e704e3efcbd5739
+import { grid_to_world_transformation } from './coordinate_system.js';
 
 const grid_coord_min = -50;
 const grid_coord_max = 50;
-const map_coord_min = -10000;
-const map_coord_max = 10000;
+const map_coord_min = -5000;
+const map_coord_max = 5000;
 
 const map_width = 950;
 const map_height = 950;
 
+var square_width = map_width / (2*grid_coord_max)
 
-function gridData() {
+window.sessionStorage['square width'] = square_width;
+
+var diamond_positions = new Set(['1, 1']);
+
+
+function _gridData() {
     var data = new Array();
     var xpos = 1; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
     var ypos = 1;
-    var width = map_width/(2*grid_coord_max);
-    var height = map_width/(2*grid_coord_max);
+    var width = square_width;
+    var height = square_width;
     var click = 0;
     
     // iterate for rows 
@@ -23,12 +30,20 @@ function gridData() {
         
         // iterate for cells/columns inside rows
         for (var column = 0; column < 2*grid_coord_max; column++) {
+            let color;
+            var this_position = String(xpos) + ', ' + String(ypos);
+
+            if (diamond_positions.has(this_position)) {
+                color = 'rgba(0, 255, 255, 1)';
+            } else {
+                color = 'rgba(255, 255, 255, 0.1)';
+            }
             data[row].push({
                 x: xpos,
                 y: ypos,
                 width: width,
                 height: height,
-                click: click
+                color: color
             })
             // increment the x position. I.e. move it over by 50 (width variable)
             xpos += width;
@@ -41,7 +56,16 @@ function gridData() {
     return data;
 }
 
-var gridData = gridData();  
+function updateCoordinates(x, z) {
+    var world_x = String(grid_to_world_transformation(x));
+    var world_z = String(-1* grid_to_world_transformation(z));
+
+    document.getElementById('x').innerHTML = 'x: ' + world_x;
+    document.getElementById('z').innerHTML = 'z: ' + world_z;
+}
+
+
+var gridData = _gridData();  
 console.log(gridData);
 
 var grid = d3.select("#grid")
@@ -62,12 +86,15 @@ var column = row.selectAll(".square")
     .attr("y", function(d) { return d.y; })
     .attr("width", function(d) { return d.width; })
     .attr("height", function(d) { return d.height; })
-    .style("fill", "#fff")
+    .style("fill", function(d) { return d.color; })
     .style("stroke", "#222")
-    .on('click', function(d) {
-       d.click ++;
-       if ((d.click)%4 == 0 ) { d3.select(this).style("fill","#fff"); }
-       if ((d.click)%4 == 1 ) { d3.select(this).style("fill","#2C93E8"); }
-       if ((d.click)%4 == 2 ) { d3.select(this).style("fill","#F56C4E"); }
-       if ((d.click)%4 == 3 ) { d3.select(this).style("fill","#838690"); }
+    .on('mouseover', function(d) {
+        // highlight square as red
+       d3.select(this).style("fill",'rgba(255, 0, 0, 1)');
+
+       updateCoordinates(d.x, d.y);
+
+    })
+    .on('mouseout', function (d) {
+        d3.select(this).style("fill", 'rgba(255, 255, 255, 0.1');
     });

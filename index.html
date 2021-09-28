@@ -6,6 +6,21 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Montserrat"
+          rel="stylesheet"
+        />
+
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+
+        <link rel="stylesheet" href="vendor/apexcharts/styles.css" />
         <link type="text/css" rel="stylesheet" href="styles/main.css">
                 
         
@@ -17,8 +32,12 @@
         <div id="bkg-image"> 
           <div id="grid"></div>
         </div>
+        <div class='grid_coordinates' id="coordinate-label">
+            <p id="x" class="coordinates"></p>
+            <p id="z" class="coordinates"></p>
+        </div>
         
-        <script src="/src/Map/grid.js"></script>
+        <script type="module" src="/src/Map/grid.js"></script>
 
     </body>
 </html>
