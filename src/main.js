@@ -21,13 +21,6 @@ function promise_chain(db) {
 
     promise.then(result => {
         var dash = new Dashboard(db);
-        // window.dash = dash;
-        // window.localStorage.setItem('dash', [dash]);
-           // .then(result => {
-           //          return result.make_queries.bind(result)()})
-           // .then(result => {
-           //          console.log(result)})
-
     })
 }
 

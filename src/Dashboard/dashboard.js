@@ -1,15 +1,21 @@
+import { sample_river_plot, sample_area_plot } from '../../vendor/apexcharts/sample.js';
+
 
 class Dashboard {
     constructor(db) {
         this.db = db;
-
-        // this._assemble_dashboard();
     }
 
     assemble_dashboard() {
-        this._make_biome_plot("SWAMP");
+        // want all plots to load at same time, and sample plots are quick
+        this._make_biome_plot("SWAMP").then(result => {
+            sample_river_plot();
+            sample_area_plot();
+        })
         // this._make_biome_plot("RIVER");
         // this._make_depth_plot();
+
+        
 
     }
 
@@ -27,12 +33,11 @@ class Dashboard {
         var case_queries_promises = cases.map(this.db.gsiQuery.bind(this.db));
         var results = Promise.all(case_queries_promises);
 
-        results.then(data => {
+        return results.then(data => {
                     return this._get_quartile_stats(data)})
                 .then(data => {
                     this._make_box_and_whisker_plot(data, biome)
                 }); 
-
     }
 
     _query() {
@@ -97,6 +102,9 @@ class Dashboard {
                     })
 
                 })
+                z_offset_vals.sort(function (a, b) {
+                    return a - b;
+                });
 
                 var quartiles = [
                     d3.quantile(z_offset_vals, 0),

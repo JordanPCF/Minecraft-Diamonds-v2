@@ -1,98 +1,5 @@
-// window.Apex = {
-//   chart: {
-//     foreColor: '#fff',
-//     toolbar: {
-//       show: false
-//     },
-//   },
-//   stroke: {
-//     width: 3
-//   },
-//   dataLabels: {
-//     enabled: false
-//   },
-//   tooltip: {
-//     theme: 'dark'
-//   },
-//   grid: {
-//     borderColor: "#535A6C",
-//     xaxis: {
-//       lines: {
-//         show: true
-//       }
-//     }
-//   }
-// };
-
-
-var options_swamp = {
-          series: [
-          {
-            type: 'boxPlot',
-            data: [
-              {
-                x: '1',
-                y: [54, 66, 69, 75, 88]
-              },
-              {
-                x: '2',
-                y: [43, 65, 69, 76, 81]
-              },
-              {
-                x: '3',
-                y: [31, 39, 45, 51, 59]
-              },
-              {
-                x: '4',
-                y: [39, 46, 55, 65, 71]
-              },
-              {
-                x: '5',
-                y: [29, 31, 35, 39, 44]
-              },
-              {
-                x: '6',
-                y: [41, 49, 58, 61, 67]
-              },
-              {
-                x: '7',
-                y: [54, 59, 66, 71, 88]
-              },
-              {
-                x: '8',
-                y: [54, 59, 66, 71, 88]
-              }
-            ]
-          }
-        ],
-          chart: {
-          type: 'boxPlot',
-          height: 300
-        },
-        title: {
-          text: 'Diamond Z-axis Offsets in Swamps',
-          align: 'center'
-        },
-        xaxis: {
-          title: {
-            text: 'Case #'
-          }
-        },
-        plotOptions: {
-          boxPlot: {
-            colors: {
-              upper: '#046242',
-              lower: '#00e395'
-            }
-          }
-        }
-        };
-
-var chart_swamp = new ApexCharts(document.querySelector("#swampPlot"), options_swamp);
-chart_swamp.render();
-
-
-var options_river = {
+function sample_river_plot() {
+  var options_river = {
           series: [
           {
             type: 'boxPlot',
@@ -157,10 +64,13 @@ var options_river = {
 
 var chart_river = new ApexCharts(document.querySelector("#riverPlot"), options_river);
 chart_river.render();
+}
 
 
 
-var options_area = {
+
+function sample_area_plot() {
+  var options_area = {
           series: [
           {
             name: 'Gravel (all biomes)',
@@ -197,11 +107,14 @@ var options_area = {
         },
         };
 
-        var chart_area = new ApexCharts(document.querySelector("#areaPlot"), options_area);
-        chart_area.render();
+    var chart_area = new ApexCharts(document.querySelector("#areaPlot"), options_area);
+    chart_area.render();
 
 
+}
 
+
+export { sample_river_plot, sample_area_plot };
 
 
 
