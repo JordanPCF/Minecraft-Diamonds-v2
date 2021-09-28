@@ -34,12 +34,26 @@ p {
 }
 
 #bkg-image {
-    background-image: url('../assets/world_map_zoom.jpg');
-    background-color: rgba(255,255,255,0.4);
-    background-blend-mode: lighten;
+    background-image: url('../assets/world_map_square.jpg');
+/*    background-color: rgba(255,255,255,0.4);
+    background-blend-mode: lighten;*/
 
-    background-size:     cover;     
-    height: 950px;         
+    background-size:     contain;     
+    height: 950px; 
+    /*width: 950px;        */
     background-repeat:   no-repeat;
-    background-position: center center; 
+    background-position: 50% 50%; 
+    position: relative;
+}
+
+#grid {
+    z-index: 2;
+    position: absolute;
+    bottom: 0px;
+    left: 365px;
+    opacity: 0.1;
+}
+
+body.map {
+    background-color: #1e3060;
 }

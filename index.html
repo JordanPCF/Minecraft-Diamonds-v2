@@ -6,38 +6,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-        <!-- <link
-          rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        /> -->
-        <!-- <link
-          href="https://fonts.googleapis.com/css?family=Montserrat"
-          rel="stylesheet"
-        />
-
-        <link
-          rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        /> -->
-
-        <!-- <link rel="stylesheet" href="vendor/apexcharts/styles.css" /> -->
-        <link type="text/css" rel="stylesheet" href="/styles/main.css">
+        <link type="text/css" rel="stylesheet" href="styles/main.css">
+                
         
-        
-        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
         <script src = "https://d3js.org/d3.v4.min.js"></script>
-        <script src="vendor/apexcharts/apexcharts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
+        
     </head>
-    <body>
-        <div id="bkg-image"> </div>
-        <!-- <div class="">
-            <a
-              href="world.html"
-              class="btn btn-outline-warning mr-2 button"
-            >
-              <span class="btn-text">Go to World</span>
-            </a>
-        </div> -->
+    <body class="map">
+        <div id="bkg-image"> 
+          <div id="grid"></div>
+        </div>
+        
+        <script src="/src/Map/grid.js"></script>
 
     </body>
 </html>
