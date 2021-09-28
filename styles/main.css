@@ -34,12 +34,12 @@ p {
 }
 
 #bkg-image {
-    background-image: url('../assets/world_map.PNG');
-    background-color: rgba(255,255,255,0.6);
+    background-image: url('../assets/world_map_zoom.jpg');
+    background-color: rgba(255,255,255,0.4);
     background-blend-mode: lighten;
 
     background-size:     cover;     
-    height: 1000px;         
+    height: 950px;         
     background-repeat:   no-repeat;
     background-position: center center; 
 }
