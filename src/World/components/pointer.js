@@ -24,6 +24,7 @@ function listenForPointerMove (pointer, scene, rayCaster, camera, objects, ghost
                 updateCoordinates(ghostBlock, blockLength);
             } else {
                 scene.remove(ghostBlock);
+                showCoordinates(false);
             }
             fn();
         }

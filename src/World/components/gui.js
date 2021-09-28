@@ -30,6 +30,20 @@ function createGUI (aCube, selected, isBlockSelected, blockLength, gridDivision,
         }
     });
 
+    var params = {
+        Biome: "",
+        Patch_Type: "",
+        Patch_Area: 0,
+        Patch_Center_x: 0,
+        Patch_Center_z: 0
+    };
+
+    gui.add(params, "Biome");
+    gui.add(params, "Patch_Type");
+    gui.add(params, "Patch_Area", 0, 30, 1);
+    gui.add(params, "Patch_Center_x", -10000, 10000, 1);
+    gui.add(params, "Patch_Center_z", -10000, 10000, 1);
+
     gui.matchPositionSelectedBlock = function (selected, blockLength) {
         var x_controller = gui.__controllers[0];
         var y_controller = gui.__controllers[1];

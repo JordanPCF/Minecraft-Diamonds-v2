@@ -32,3 +32,14 @@ body {
 p {
     margin: 0;
 }
+
+#bkg-image {
+    background-image: url('../assets/world_map.PNG');
+    background-color: rgba(255,255,255,0.6);
+    background-blend-mode: lighten;
+
+    background-size:     cover;     
+    height: 1000px;         
+    background-repeat:   no-repeat;
+    background-position: center center; 
+}
