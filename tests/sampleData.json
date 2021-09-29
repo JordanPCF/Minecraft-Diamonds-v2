@@ -23,11 +23,11 @@
         "INFO": {
             "CHUNK_ID": 637,
             "PATCH_AREA": 10,
-            "DIAMOND_LOCATIONS": {"X": [4903, 4903, 4903, 4902, 4902],
+            "DIAMOND_LOCATIONS": {"X": [903, 903, 903, 902, 902],
                                   "Y": [7, 6, 6, 6, 5],
                                   "Z": [315, 315, 314, 314, 314]
                               },
-            "PATCH_CENTER_X": 4904,
+            "PATCH_CENTER_X": 904,
             "PATCH_CENTER_Z": 320 
         }     
     },
@@ -39,11 +39,11 @@
         "INFO": {
             "CHUNK_ID": 531,
             "PATCH_AREA": 11,
-            "DIAMOND_LOCATIONS": {"X": [4930, 4930, 4930, 4930, 4930, 4929, 4929, 4929, 4929],
+            "DIAMOND_LOCATIONS": {"X": [1930, 1930, 1930, 1930, 1930, 1929, 1929, 1929, 1929],
                                   "Y": [5, 6, 7, 6, 7, 6, 7, 6, 7],
                                   "Z": [325, 325, 325, 326, 326, 326, 326, 325, 325]
                               },
-            "PATCH_CENTER_X": 4932,
+            "PATCH_CENTER_X": 1932,
             "PATCH_CENTER_Z": 332
         }      
     },
@@ -55,11 +55,11 @@
         "INFO": {
             "CHUNK_ID": 1280,
             "PATCH_AREA": 10,
-            "DIAMOND_LOCATIONS": {"X": [4907, 4907, 4907, 4907, 4906, 4906, 4906, 4906],
+            "DIAMOND_LOCATIONS": {"X": [2907, 2907, 2907, 2907, 2906, 2906, 2906, 2906],
                                   "Y": [12, 13, 12, 13, 12, 13, 12, 13],
                                   "Z": [337, 337, 336, 336, 336, 336, 337, 337]
                               },
-            "PATCH_CENTER_X": 4897,
+            "PATCH_CENTER_X": 2897,
             "PATCH_CENTER_Z": 336
         }      
     },
@@ -87,11 +87,11 @@
         "INFO": {
             "CHUNK_ID": 251,
             "PATCH_AREA": 8,
-            "DIAMOND_LOCATIONS": {"X": [4962, 4962, 4963, 4963],
+            "DIAMOND_LOCATIONS": {"X": [-962, -962, -963, -963],
                                   "Y": [8, 9, 8, 9],
                                   "Z": [351, 351, 351, 350]
                               },
-            "PATCH_CENTER_X": 4963,
+            "PATCH_CENTER_X": -963,
             "PATCH_CENTER_Z": 358
         }     
     },
@@ -135,11 +135,11 @@
         "INFO": {
             "CHUNK_ID": 351,
             "PATCH_AREA": 10,
-            "DIAMOND_LOCATIONS": {"X": [5003, 5003, 5004, 5004],
+            "DIAMOND_LOCATIONS": {"X": [1003, 1003, 1004, 1004],
                                   "Y": [10, 10, 11, 12],
                                   "Z": [323, 324, 325, 324]
                               },
-            "PATCH_CENTER_X": 5006,
+            "PATCH_CENTER_X": 1006,
             "PATCH_CENTER_Z": 326 
         }    
     },

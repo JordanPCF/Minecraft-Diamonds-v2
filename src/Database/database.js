@@ -1,5 +1,5 @@
 // import { cantor_pairing, inverse_cantor } from './cantor_hash.js';
-import { data } from '../../tests/sampleData.js'
+import { data_ } from '../../tests/sampleData.js'
 
 AWS.config.update({
   region: "us-west-2"
@@ -33,10 +33,20 @@ class Database {
         return new Promise(function (resolve, reject) {
             try {
                 this._createTable();
-                this._addGSI();
-                this._loadData();
+
             } catch {
                 console.log('Table exists');
+            }
+            try {
+                this._addGSI();
+            } catch {
+                console.log('Cannot add GSI');
+            }
+
+            try {
+                this._loadData();
+            } catch {
+                console.log('Cannot load data');
             }
             resolve("")
         });
@@ -106,6 +116,41 @@ class Database {
     
     }
 
+    scan_all_diamonds() {
+        var t_name = this.table_name;
+
+        return new Promise(function (resolve, reject) {
+
+            var positions = new Array();
+
+            var params = {
+                TableName: t_name,
+                ProjectionExpression: "INFO"
+            };
+
+            dynamodb.scan(params, function (err, data) {
+                if (err) {
+                    console.log("Error", err);
+                    resolve(0);
+                } else {
+
+                    data.Items.forEach(function (element, index, array) {
+                        var x_array = element["INFO"]["M"]["DIAMOND_LOCATIONS"]["M"]["X"]["L"];
+                        var z_array = element["INFO"]["M"]["DIAMOND_LOCATIONS"]["M"]["Z"]["L"];
+                        
+                        for (let i = 0; i < x_array.length; i++) {
+                            let pair = {};
+                            pair[x_array[i]['N']] = z_array[i]['N'];
+
+                            positions.push(pair);
+                        }
+                    });
+                    resolve(positions);
+                }
+             });
+        });
+    }
+
     _createTable () {
         var params = {
             TableName : this.table_name,
@@ -125,7 +170,8 @@ class Database {
 
         dynamodb.createTable(params, function (err) {
             if (err) {
-                console.log('Table already exists');
+                console.log(err);
+                // console.log('Table already exists');
             }
         });
     }
@@ -164,7 +210,7 @@ class Database {
     _loadData () {
         var t_name = this.table_name // had issue binding 'this'
 
-        data.forEach(function (cluster) {
+        data_.forEach(function (cluster) {
             var params = {
                     TableName: t_name,
                     Item: {
