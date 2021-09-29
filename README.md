@@ -6,7 +6,7 @@
 
 #### Map View: 
 
-Find your coordinate location on the map to record your mining data and track where you have searched for diamonds.
+Select your coordinate location on the map to record your mining data and track where you have searched for diamonds.
 ![map](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/map_screenshot.png)
 
 #### User Data Collection
