@@ -48,6 +48,11 @@ function buildGrid(db, diamonds) {
         })
         .on('mouseout', function (d) {
             d3.select(this).style("fill", 'rgba(255, 255, 255, 0.1');
+        })
+        .on('click', function (d) {
+            window.sessionStorage['map_x'] = grid_to_world_transformation(d.x);
+            window.sessionStorage['map_z'] = grid_to_world_transformation(d.y);
+            window.location ='./world.html';
         });
 }
 

@@ -6,13 +6,13 @@ function createGUI (aCube, selected, isBlockSelected, blockLength, gridDivision,
     const minCoord = - gridDivision / 2;
     const maxCoord = (gridDivision / 2) - 1;
 
-    gui.add(aCube, 'x', minCoord, maxCoord, 1).onChange(function (e) {
-        if (isBlockSelected['block']) {
-            selected[0].position.x = getBlockPosition(blockLength, e);
+    // gui.add(aCube, 'x', minCoord, maxCoord, 1).onChange(function (e) {
+    //     if (isBlockSelected['block']) {
+    //         selected[0].position.x = getBlockPosition(blockLength, e);
 
-            fn();
-        }
-    });
+    //         fn();
+    //     }
+    // });
 
     gui.add(aCube, 'y', 0, 16, 1).onChange(function (e) {
         if (isBlockSelected['block']) {
@@ -22,46 +22,54 @@ function createGUI (aCube, selected, isBlockSelected, blockLength, gridDivision,
         }
     });
 
-    gui.add(aCube, 'z', minCoord, maxCoord, 1).onChange(function (e) {
-        if (isBlockSelected['block']) {
-            selected[0].position.z = getBlockPosition(blockLength, e);
+    // gui.add(aCube, 'z', minCoord, maxCoord, 1).onChange(function (e) {
+    //     if (isBlockSelected['block']) {
+    //         selected[0].position.z = getBlockPosition(blockLength, e);
 
-            fn();
-        }
-    });
+    //         fn();
+    //     }
+    // });
 
     var params = {
         Biome: "",
         Patch_Type: "",
         Patch_Area: 0,
-        Patch_Center_x: 0,
-        Patch_Center_z: 0
+        Patch_Center_x: parseInt(window.sessionStorage['map_x']),
+        Patch_Center_z: -1*parseInt(window.sessionStorage['map_z'])
     };
 
     gui.add(params, "Biome");
     gui.add(params, "Patch_Type");
     gui.add(params, "Patch_Area", 0, 30, 1);
-    gui.add(params, "Patch_Center_x", -10000, 10000, 1);
-    gui.add(params, "Patch_Center_z", -10000, 10000, 1);
+    gui.add(params, 
+            "Patch_Center_x", 
+            parseInt(window.sessionStorage['map_x']) - 32, 
+            parseInt(window.sessionStorage['map_x']) + 32, 
+            1);
+    gui.add(params, 
+            "Patch_Center_z",
+            parseInt(window.sessionStorage['map_z']) - 32, 
+            parseInt(window.sessionStorage['map_z']) + 32, 
+            1);
 
     gui.matchPositionSelectedBlock = function (selected, blockLength) {
-        var x_controller = gui.__controllers[0];
-        var y_controller = gui.__controllers[1];
-        var z_controller = gui.__controllers[2];
+        // var x_controller = gui.__controllers[0];
+        var y_controller = gui.__controllers[0];
+        // var z_controller = gui.__controllers[2];
 
         // console.log(selected[0].position.x);
 
-        var normalizedPositionX = getNormalizedPosition(selected[0].position.x, blockLength);
+        // var normalizedPositionX = getNormalizedPosition(selected[0].position.x, blockLength);
         var normalizedPositionY = getNormalizedPosition(selected[0].position.y, blockLength);
-        var normalizedPositionZ = getNormalizedPosition(selected[0].position.z, blockLength);
+        // var normalizedPositionZ = getNormalizedPosition(selected[0].position.z, blockLength);
 
-        x_controller.setValue(normalizedPositionX);
+        // x_controller.setValue(normalizedPositionX);
         y_controller.setValue(normalizedPositionY);
-        z_controller.setValue(normalizedPositionZ);
+        // z_controller.setValue(normalizedPositionZ);
 
-        x_controller.updateDisplay();
+        // x_controller.updateDisplay();
         y_controller.updateDisplay();
-        z_controller.updateDisplay();
+        // z_controller.updateDisplay();
     }
     return gui
 }

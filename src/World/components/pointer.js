@@ -101,7 +101,7 @@ function selectedBlockHandler(scene, selected, gui, blockLength) {
     gui.matchPositionSelectedBlock(selected, blockLength);
     gui.open();
 
-    showCoordinates(false);
+    // showCoordinates(false);
     
 }
 
@@ -142,9 +142,9 @@ function setDefaultProperties(object, plane, isBlockSelected) {
 
 function updateCoordinates(ghostBlock, blockLength) {
     // shows the user the coordinates of the ghost block
-    var xpos = Math.floor(ghostBlock.position.x / blockLength);
+    var xpos = Math.floor(ghostBlock.position.x / blockLength) + parseInt(window.sessionStorage['map_x']);
     var ypos = Math.floor(ghostBlock.position.y / blockLength);
-    var zpos = Math.floor(ghostBlock.position.z / blockLength);
+    var zpos = -1 * (Math.floor(ghostBlock.position.z / blockLength) + parseInt(window.sessionStorage['map_z']));
     document.getElementById('x').innerHTML = 'x: ' + xpos;
     document.getElementById('y').innerHTML = 'y: ' + ypos;
     document.getElementById('z').innerHTML = 'z: ' + zpos;
