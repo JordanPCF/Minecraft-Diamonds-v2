@@ -1,10 +1,18 @@
 # Minecraft-Diamonds-v2
 
+- [Minecraft-Diamonds-v2](#minecraft-diamonds-v2)
+  * [The App](#the-app)
+      - [Gif of Functionality](#gif-of-functionality)
+      - [Map View:](#map-view)
+      - [User Data Collection](#user-data-collection)
+      - [Data Dashboard](#data-dashboard)
+  * [Motivation](#motivation)
+
 ## The App
 #### Gif of Functionality
 ![Screenrecording](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/site_screencap.gif "App Functionality")
 
-#### Map View: 
+#### Map View 
 
 Select your coordinate location on the map to record your mining data and track where you have searched for diamonds.
 ![map](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/map_screenshot.png)
