@@ -30,7 +30,6 @@ function _world_to_grid_transformation(coord) {
 }
 
 function grid_to_world_transformation(coord) {
-    coord = parseInt(coord);
     var square_num = (coord - 1) / window.sessionStorage['square width'];
     var transformed = (square_num * 100) + 100 - 5000;
 
