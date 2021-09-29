@@ -33,6 +33,8 @@ function createGUI (aCube, selected, isBlockSelected, blockLength, gridDivision,
     var params = {
         Biome: "",
         Patch_Type: "",
+        switch: false,
+        switch2: false,
         Patch_Area: 0,
         Patch_Center_x: parseInt(window.sessionStorage['map_x']),
         Patch_Center_z: -1*parseInt(window.sessionStorage['map_z'])
@@ -40,6 +42,8 @@ function createGUI (aCube, selected, isBlockSelected, blockLength, gridDivision,
 
     gui.add(params, "Biome");
     gui.add(params, "Patch_Type");
+    gui.add(params, "switch").name("Cut off");
+    gui.add(params, "switch2").name("On edge");
     gui.add(params, "Patch_Area", 0, 30, 1);
     gui.add(params, 
             "Patch_Center_x", 

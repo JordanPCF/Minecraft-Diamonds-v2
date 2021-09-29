@@ -21,9 +21,17 @@ body {
     z-index: 2;
 }
 
-.button {
+.button1 {
     position: absolute;
     bottom: 30px;
+    left: 75px;
+    z-index: 2;
+    background-color: #343f59;
+}
+
+.button2 {
+    position: absolute;
+    bottom: 70px;
     left: 75px;
     z-index: 2;
     background-color: #343f59;
