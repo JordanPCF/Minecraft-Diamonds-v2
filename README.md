@@ -3,7 +3,7 @@
 - [Minecraft-Diamonds-v2](#minecraft-diamonds-v2)
   * [The App](#the-app)
       - [Gif of Functionality](#gif-of-functionality)
-      - [Map View:](#map-view)
+      - [Map View](#map-view)
       - [User Data Collection](#user-data-collection)
       - [Data Dashboard](#data-dashboard)
   * [Motivation](#motivation)
