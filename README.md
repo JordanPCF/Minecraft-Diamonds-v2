@@ -57,5 +57,5 @@ Users add diamond blocks at the x-z coordinates of known diamond ore and select 
 
 #### Data Dashboard
 Based on the biome the user is currently exploring, they can predict how far from a gravel or clay patch's center diamonds are likely to be found. The depth of the diamond ore is believed to be related to the area of the above-ground patch and informs the user on how deep to mine. Clay and gravel patches are often cut off by other land features or near the edge of a rendering chunk's border. It is unclear if the correlation pattern will apply in these cases, so they are all displayed separately here. 
-![dashboard](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/data_dashboard_screenshot.png)
+![dashboard](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/data_dashboard_screenshot2.png)
 
