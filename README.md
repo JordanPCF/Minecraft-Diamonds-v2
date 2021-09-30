@@ -45,14 +45,14 @@ To determine the pattern for the Bedrock version:
 #### Map View 
 
 Select your coordinate location on the map to record your mining data and track where you have searched for diamonds.
-![map](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/map_screenshot.png)
+![map](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/map_screenshot2.png)
 
 #### User Data Collection
 
 Interactive 3D map to record diamond data and update the Amazon DynamoDB database. Minecraft worlds are rendered in 16 x 16 vertical 'chunks'. The borders of these chunks are relevant to the spawning of correlated features such as clay/gravel patches and diamond ore. Four such chunks are shown here.
 
 Users add diamond blocks at the x-z coordinates of known diamond ore and select the blocks to enter data about the corresponding features.
-![drawing](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/drawing_blocks.png)
+![drawing](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/drawing_blocks2.png)
 ![world](https://github.com/JordanPCF/Minecraft-Diamonds-v2/blob/main/assets/3d_user_data_entry_screenshot.png)
 
 #### Data Dashboard
